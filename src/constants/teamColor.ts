@@ -7,8 +7,8 @@ export const teamColor = {
     Dragons: '#002569',
     Hawks: '#FCC700',
     Fighters: '#275b91',
-    Marines: "C0C0C0",
-    Eagles: '870010',
+    Marines: "#C0C0C0",
+    Eagles: '#870010',
     Buffaloes: '#00011f',
-    Lions: '092048',
+    Lions: '#092048',
 }
