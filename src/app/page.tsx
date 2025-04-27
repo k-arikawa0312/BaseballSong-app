@@ -1,13 +1,7 @@
-import { teamColor } from "@/constants/teamColor";
-import MidiPlayer from "./components/MidiPlayer";
-import { dummyMidiData } from "./dummyMidiData";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return (
-    <>
-      <p className={`text-[${teamColor.Dragons}]`}>ttest</p>
-      <p style={{ color: teamColor.Carp }}>ttestaaaaaaaaaaa</p>
-      <MidiPlayer midiData={dummyMidiData} />
-    </>
-  );
-}
+const Home = () => {
+  redirect("/login");
+};
+
+export default Home;
