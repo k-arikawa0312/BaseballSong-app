@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { CheerSongMidiData, MidiNote } from "../../types/midi";
 import { Synth, Transport, Part, start as startTone } from "tone";
+import * as Tone from "tone";
 
 interface MidiPlayerProps {
   midiData: CheerSongMidiData;
@@ -130,7 +131,7 @@ const MidiPlayer: React.FC<MidiPlayerProps> = ({
     if (!isReady) return;
 
     // 初期化
-    Transport.stop();
+    Tone.Transport.stop();
     Transport.cancel(0);
     startTimeRef.current = Date.now();
 
