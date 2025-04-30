@@ -2,7 +2,6 @@
 
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { History, Music } from "lucide-react";
 
 export default function Loading() {
   // スケルトンカードを生成する関数
@@ -50,7 +49,7 @@ export default function Loading() {
         {/* 最近歌った曲セクションスケルトン */}
         <section className="space-y-3">
           <div className="flex items-center">
-            <History className="h-5 w-5 mr-2 text-muted-foreground" />
+            {/* <History className="h-5 w-5 mr-2 text-muted-foreground" /> */}
             <Skeleton className="h-7 w-32" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -61,7 +60,7 @@ export default function Loading() {
         {/* マイプレイリストセクションスケルトン */}
         <section className="space-y-3">
           <div className="flex items-center">
-            <Music className="h-5 w-5 mr-2 text-primary" />
+            {/* <Music className="h-5 w-5 mr-2 text-primary" /> */}
             <Skeleton className="h-7 w-40" />
           </div>
           <div className="bg-card p-4 text-center rounded-md">
@@ -74,7 +73,7 @@ export default function Loading() {
         {/* 野球応援歌セクションスケルトン */}
         <section className="space-y-3">
           <div className="flex items-center">
-            <Music className="h-5 w-5 mr-2 text-primary" />
+            {/* <Music className="h-5 w-5 mr-2 text-primary" /> */}
             <Skeleton className="h-7 w-32" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
