@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -24,10 +23,8 @@ export default function SingingPage({ params }: { params: { id: string } }) {
       const nextLyric = songData.lyrics[index + 1];
       return lyric.time <= time && (!nextLyric || nextLyric.time > time);
     });
-
     const currentLyric = songData.lyrics[currentIndex]?.text || "";
     const nextLyric = songData.lyrics[currentIndex + 1]?.text || "";
-
     return { currentLyric, nextLyric };
   };
 
@@ -36,7 +33,6 @@ export default function SingingPage({ params }: { params: { id: string } }) {
   // 曲の進行をシミュレート
   useEffect(() => {
     if (!isPlaying) return;
-
     const timer = setInterval(() => {
       setCurrentTime((prev) => {
         if (prev >= duration) {
@@ -46,7 +42,6 @@ export default function SingingPage({ params }: { params: { id: string } }) {
         return prev + 1;
       });
     }, 1000);
-
     return () => clearInterval(timer);
   }, [duration, isPlaying]);
 
@@ -63,80 +58,58 @@ export default function SingingPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100">
+    <div className="min-h-screen flex flex-col bg-gray-900">
       <header className="bg-indigo-700 p-4 flex items-center justify-between">
         <div className="flex items-center">
-          <Link href="/song-selection" className="mr-4">
-            {/* <ArrowLeft className="h-6 w-6 text-white" /> */}
-          </Link>
           <h1 className="text-xl font-bold text-white">カラオケ</h1>
         </div>
-        <button className="text-white">
-          {/* <VolumeX className="h-6 w-6" /> */}
-        </button>
       </header>
 
-      <div className="flex-1 p-4 bg-gray-100">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* 左側: 曲情報 */}
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <div className="aspect-square bg-gray-200 rounded-md mb-4 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-gray-300 flex items-center justify-center">
-                <span className="text-gray-500 text-xs">歌</span>
+      <div className="flex-1 flex items-center justify-center p-4 bg-gray-900">
+        <div className="w-full max-w-4xl">
+          <div className="bg-gray-800 rounded-lg p-6 shadow-lg border border-gray-700">
+            <div className="mb-6 text-center">
+              <h2 className="text-xl font-bold text-white">{songData.title}</h2>
+              <p className="text-gray-300">{songData.team}</p>
+            </div>
+
+            {/* Lyrics section - centered with more space */}
+            <div className="mb-8 py-6">
+              <p className="text-gray-300 mb-2 text-center">現在の歌詞:</p>
+              <div className="min-h-16 flex items-center justify-center">
+                <p className="text-3xl font-bold text-white text-center my-6">
+                  {currentLyric}
+                </p>
+              </div>
+
+              <p className="text-gray-300 mb-2 text-center mt-8">次の歌詞:</p>
+              <div className="min-h-12 flex items-center justify-center">
+                <p className="text-xl text-gray-300 text-center">{nextLyric}</p>
               </div>
             </div>
-            <h2 className="text-xl font-bold text-gray-800">
-              {songData.title}
-            </h2>
-            <p className="text-gray-600">{songData.team}</p>
-          </div>
 
-          {/* 右側: 歌詞表示 */}
-          <div className="bg-white rounded-lg p-4 shadow-sm">
-            <div className="mb-8">
-              <p className="text-gray-600 mb-2">現在の歌詞:</p>
-              <p className="text-2xl font-bold text-center my-4">
-                {currentLyric}
-              </p>
-
-              <p className="text-gray-600 mb-2">次の歌詞:</p>
-              <p className="text-lg text-gray-800 text-center">{nextLyric}</p>
-            </div>
-
-            {/* プログレスバー */}
             <div className="mt-8">
-              <div className="relative w-full h-2 bg-gray-200 rounded-full mb-2">
+              <div className="relative w-full h-2 bg-gray-700 rounded-full mb-2">
                 <div
                   className="absolute h-2 bg-indigo-600 rounded-full"
                   style={{ width: `${(currentTime / duration) * 100}%` }}
                 ></div>
               </div>
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-gray-300">
                 <span>{formatTime(currentTime)}</span>
                 <span>{formatTime(duration)}</span>
               </div>
             </div>
 
-            {/* 再生ボタン */}
-            <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-6">
               <button
                 onClick={togglePlayback}
-                className="px-8 py-2 bg-indigo-700 text-white rounded-full font-medium"
+                className="px-8 py-3 bg-indigo-700 hover:bg-indigo-600 text-white rounded-full font-medium transition"
               >
                 {isPlaying ? "一時停止" : "再生"}
               </button>
             </div>
           </div>
-        </div>
-
-        {/* 歌唱のヒント */}
-        <div className="bg-white rounded-lg p-4 shadow-sm mt-4">
-          <h3 className="text-lg font-bold text-gray-800 mb-3">歌唱のヒント</h3>
-          <ul className="list-disc pl-5 space-y-2 text-gray-700">
-            <li>マイクボタンをタップして、マイクをオンにしてください</li>
-            <li>画面に表示される歌詞に合わせて歌ってください</li>
-            <li>曲が終わると自動的に採点結果が表示されます</li>
-          </ul>
         </div>
       </div>
     </div>
