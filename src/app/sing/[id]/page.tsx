@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import MidiPlayer from "@/app/components/MidiPlayer";
+import { dummyMidiData } from "@/app/dummyMidiData";
 
 export default function SingingPage({ params }: { params: { id: string } }) {
   const [currentTime, setCurrentTime] = useState(1); // Start at 1 second
@@ -109,6 +111,7 @@ export default function SingingPage({ params }: { params: { id: string } }) {
                 {isPlaying ? "一時停止" : "再生"}
               </button>
             </div>
+            <MidiPlayer midiData={dummyMidiData} />
           </div>
         </div>
       </div>
