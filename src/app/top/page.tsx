@@ -77,7 +77,7 @@ export default function SongSelectionPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {recentSongs.map((song) => (
               <Link
-                href={`/singing/${song.id}`}
+                href={`/sing/${song.id}`}
                 key={`recent-${song.id}`}
                 className="bg-white rounded-lg overflow-hidden shadow-sm"
               >
@@ -115,7 +115,7 @@ export default function SongSelectionPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {cheeringSongs.map((song) => (
               <Link
-                href={`/singing/${song.id}`}
+                href={`/sing/${song.id}`}
                 key={`cheering-${song.id}`}
                 className="bg-white rounded-lg overflow-hidden shadow-sm"
               >
