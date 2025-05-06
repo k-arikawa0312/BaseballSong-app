@@ -1194,7 +1194,7 @@ export namespace Prisma {
     id: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath: string | null
     midiFilePath: string
     lyrics: string
     _count: SongCountAggregateOutputType | null
@@ -1272,7 +1272,7 @@ export namespace Prisma {
       id: string
       title: string
       team: string
-      audioFilePath: string
+      audioFilePath: string | null
       midiFilePath: string
       lyrics: string
     }, ExtArgs["result"]["song"]>
@@ -4369,6 +4369,14 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -4449,7 +4457,7 @@ export namespace Prisma {
     id?: StringFilter<"Song"> | string
     title?: StringFilter<"Song"> | string
     team?: StringFilter<"Song"> | string
-    audioFilePath?: StringFilter<"Song"> | string
+    audioFilePath?: StringNullableFilter<"Song"> | string | null
     midiFilePath?: StringFilter<"Song"> | string
     lyrics?: StringFilter<"Song"> | string
     SongLyrics?: XOR<SongLyricsNullableScalarRelationFilter, SongLyricsWhereInput> | null
@@ -4460,7 +4468,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrder
+    audioFilePath?: SortOrderInput | SortOrder
     midiFilePath?: SortOrder
     lyrics?: SortOrder
     SongLyrics?: SongLyricsOrderByWithRelationInput
@@ -4474,7 +4482,7 @@ export namespace Prisma {
     NOT?: SongWhereInput | SongWhereInput[]
     title?: StringFilter<"Song"> | string
     team?: StringFilter<"Song"> | string
-    audioFilePath?: StringFilter<"Song"> | string
+    audioFilePath?: StringNullableFilter<"Song"> | string | null
     midiFilePath?: StringFilter<"Song"> | string
     lyrics?: StringFilter<"Song"> | string
     SongLyrics?: XOR<SongLyricsNullableScalarRelationFilter, SongLyricsWhereInput> | null
@@ -4485,7 +4493,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrder
+    audioFilePath?: SortOrderInput | SortOrder
     midiFilePath?: SortOrder
     lyrics?: SortOrder
     _count?: SongCountOrderByAggregateInput
@@ -4500,7 +4508,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Song"> | string
     title?: StringWithAggregatesFilter<"Song"> | string
     team?: StringWithAggregatesFilter<"Song"> | string
-    audioFilePath?: StringWithAggregatesFilter<"Song"> | string
+    audioFilePath?: StringNullableWithAggregatesFilter<"Song"> | string | null
     midiFilePath?: StringWithAggregatesFilter<"Song"> | string
     lyrics?: StringWithAggregatesFilter<"Song"> | string
   }
@@ -4613,7 +4621,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongLyrics?: SongLyricsCreateNestedOneWithoutSongInput
@@ -4624,7 +4632,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongLyrics?: SongLyricsUncheckedCreateNestedOneWithoutSongInput
@@ -4635,7 +4643,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUpdateOneWithoutSongNestedInput
@@ -4646,7 +4654,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUncheckedUpdateOneWithoutSongNestedInput
@@ -4657,7 +4665,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
   }
@@ -4666,7 +4674,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
   }
@@ -4675,7 +4683,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
   }
@@ -4791,6 +4799,21 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type SongLyricsNullableScalarRelationFilter = {
     is?: SongLyricsWhereInput | null
     isNot?: SongLyricsWhereInput | null
@@ -4799,6 +4822,11 @@ export namespace Prisma {
   export type SongMidiNullableScalarRelationFilter = {
     is?: SongMidiWhereInput | null
     isNot?: SongMidiWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type SongCountOrderByAggregateInput = {
@@ -4844,6 +4872,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -5009,6 +5055,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type SongLyricsUpdateOneWithoutSongNestedInput = {
     create?: XOR<SongLyricsCreateWithoutSongInput, SongLyricsUncheckedCreateWithoutSongInput>
     connectOrCreate?: SongLyricsCreateOrConnectWithoutSongInput
@@ -5099,6 +5149,20 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5125,6 +5189,34 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -5261,7 +5353,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongMidi?: SongMidiCreateNestedOneWithoutSongInput
@@ -5271,7 +5363,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongMidi?: SongMidiUncheckedCreateNestedOneWithoutSongInput
@@ -5297,7 +5389,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongMidi?: SongMidiUpdateOneWithoutSongNestedInput
@@ -5307,7 +5399,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongMidi?: SongMidiUncheckedUpdateOneWithoutSongNestedInput
@@ -5317,7 +5409,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongLyrics?: SongLyricsCreateNestedOneWithoutSongInput
@@ -5327,7 +5419,7 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath: string
+    audioFilePath?: string | null
     midiFilePath: string
     lyrics: string
     SongLyrics?: SongLyricsUncheckedCreateNestedOneWithoutSongInput
@@ -5353,7 +5445,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUpdateOneWithoutSongNestedInput
@@ -5363,7 +5455,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: StringFieldUpdateOperationsInput | string
+    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
     midiFilePath?: StringFieldUpdateOperationsInput | string
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUncheckedUpdateOneWithoutSongNestedInput
