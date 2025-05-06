@@ -18,7 +18,7 @@ model Song {
   id            String      @id @default(uuid())
   title         String
   team          String
-  audioFilePath String
+  audioFilePath String?
   midiFilePath  String
   lyrics        String
   SongLyrics    SongLyrics?
