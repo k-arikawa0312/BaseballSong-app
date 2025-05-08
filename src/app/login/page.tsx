@@ -5,16 +5,29 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { SiApplemusic } from "react-icons/si";
+import { authClient } from "@/lib/authClient";
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      router.push("/top");
-    }, 1000);
+    setError(null);
+    
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/top"
+      });
+    } catch (err) {
+      console.error('Googleログインエラー:', err);
+      setError('ログインに失敗しました。もう一度お試しください。');
+      setIsLoading(false);
+    } finally {
+      console.log("fin")
+    }
   };
 
   return (
@@ -25,7 +38,6 @@ export default function LoginPage() {
         </div>
       </header>
 
-      {/* ここで纵横ともに中央揃えにする */}
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-3/4 max-w-2xl">
           <CardHeader className="flex justify-center ">
@@ -37,6 +49,12 @@ export default function LoginPage() {
             </h2>
           </CardHeader>
           <CardContent className="space-y-4 pt-4">
+            {error && (
+              <div className="bg-destructive/10 text-destructive p-3 rounded-md text-center">
+                {error}
+              </div>
+            )}
+            
             <p className="text-center text-muted-foreground">
               Googleアカウントでログインして、すべての機能を利用しましょう
             </p>
@@ -44,11 +62,13 @@ export default function LoginPage() {
             <Button
               className="btn bg-white text-black border-[#e5e5e5] w-3/4 m-auto"
               onClick={handleGoogleLogin}
+              disabled={isLoading}
             >
               <svg
                 aria-label="Google logo"
                 width="16"
                 height="16"
+                className="mr-2"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 512 512"
               >
@@ -72,7 +92,7 @@ export default function LoginPage() {
                   />
                 </g>
               </svg>
-              {isLoading ? <p>Loading...</p> : <p> Login with Google</p>}
+              {isLoading ? "ログイン中..." : "Googleでログイン"}
             </Button>
 
             <div className="h-px bg-border my-4" />

@@ -75,7 +75,6 @@ export default function SingingPage({ params }: { params: { id: string } }) {
               <p className="text-gray-300">{songData.team}</p>
             </div>
 
-            {/* Lyrics section - centered with more space */}
             <div className="mb-8 py-6">
               <p className="text-gray-300 mb-2 text-center">現在の歌詞:</p>
               <div className="min-h-16 flex items-center justify-center">
