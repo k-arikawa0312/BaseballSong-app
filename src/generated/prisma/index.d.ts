@@ -24,11 +24,6 @@ export type Song = $Result.DefaultSelection<Prisma.$SongPayload>
  */
 export type SongLyrics = $Result.DefaultSelection<Prisma.$SongLyricsPayload>
 /**
- * Model SongMidi
- * 
- */
-export type SongMidi = $Result.DefaultSelection<Prisma.$SongMidiPayload>
-/**
  * Model User
  * 
  */
@@ -193,16 +188,6 @@ export class PrismaClient<
     * ```
     */
   get songLyrics(): Prisma.SongLyricsDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.songMidi`: Exposes CRUD operations for the **SongMidi** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more SongMidis
-    * const songMidis = await prisma.songMidi.findMany()
-    * ```
-    */
-  get songMidi(): Prisma.SongMidiDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -685,7 +670,6 @@ export namespace Prisma {
   export const ModelName: {
     Song: 'Song',
     SongLyrics: 'SongLyrics',
-    SongMidi: 'SongMidi',
     User: 'User',
     Session: 'Session',
     Account: 'Account',
@@ -708,7 +692,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "song" | "songLyrics" | "songMidi" | "user" | "session" | "account" | "verification"
+      modelProps: "song" | "songLyrics" | "user" | "session" | "account" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -857,80 +841,6 @@ export namespace Prisma {
           count: {
             args: Prisma.SongLyricsCountArgs<ExtArgs>
             result: $Utils.Optional<SongLyricsCountAggregateOutputType> | number
-          }
-        }
-      }
-      SongMidi: {
-        payload: Prisma.$SongMidiPayload<ExtArgs>
-        fields: Prisma.SongMidiFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.SongMidiFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.SongMidiFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          findFirst: {
-            args: Prisma.SongMidiFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.SongMidiFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          findMany: {
-            args: Prisma.SongMidiFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>[]
-          }
-          create: {
-            args: Prisma.SongMidiCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          createMany: {
-            args: Prisma.SongMidiCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.SongMidiCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>[]
-          }
-          delete: {
-            args: Prisma.SongMidiDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          update: {
-            args: Prisma.SongMidiUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          deleteMany: {
-            args: Prisma.SongMidiDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.SongMidiUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.SongMidiUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>[]
-          }
-          upsert: {
-            args: Prisma.SongMidiUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$SongMidiPayload>
-          }
-          aggregate: {
-            args: Prisma.SongMidiAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateSongMidi>
-          }
-          groupBy: {
-            args: Prisma.SongMidiGroupByArgs<ExtArgs>
-            result: $Utils.Optional<SongMidiGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.SongMidiCountArgs<ExtArgs>
-            result: $Utils.Optional<SongMidiCountAggregateOutputType> | number
           }
         }
       }
@@ -1316,7 +1226,6 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     song?: SongOmit
     songLyrics?: SongLyricsOmit
-    songMidi?: SongMidiOmit
     user?: UserOmit
     session?: SessionOmit
     account?: AccountOmit
@@ -1468,8 +1377,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     team: string | null
-    audioFilePath: string | null
-    midiFilePath: string | null
+    midiFile: Uint8Array | null
     lyrics: string | null
   }
 
@@ -1477,8 +1385,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     team: string | null
-    audioFilePath: string | null
-    midiFilePath: string | null
+    midiFile: Uint8Array | null
     lyrics: string | null
   }
 
@@ -1486,8 +1393,7 @@ export namespace Prisma {
     id: number
     title: number
     team: number
-    audioFilePath: number
-    midiFilePath: number
+    midiFile: number
     lyrics: number
     _all: number
   }
@@ -1497,8 +1403,7 @@ export namespace Prisma {
     id?: true
     title?: true
     team?: true
-    audioFilePath?: true
-    midiFilePath?: true
+    midiFile?: true
     lyrics?: true
   }
 
@@ -1506,8 +1411,7 @@ export namespace Prisma {
     id?: true
     title?: true
     team?: true
-    audioFilePath?: true
-    midiFilePath?: true
+    midiFile?: true
     lyrics?: true
   }
 
@@ -1515,8 +1419,7 @@ export namespace Prisma {
     id?: true
     title?: true
     team?: true
-    audioFilePath?: true
-    midiFilePath?: true
+    midiFile?: true
     lyrics?: true
     _all?: true
   }
@@ -1597,8 +1500,7 @@ export namespace Prisma {
     id: string
     title: string
     team: string
-    audioFilePath: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
     _count: SongCountAggregateOutputType | null
     _min: SongMinAggregateOutputType | null
@@ -1623,19 +1525,16 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     team?: boolean
-    audioFilePath?: boolean
-    midiFilePath?: boolean
+    midiFile?: boolean
     lyrics?: boolean
     SongLyrics?: boolean | Song$SongLyricsArgs<ExtArgs>
-    SongMidi?: boolean | Song$SongMidiArgs<ExtArgs>
   }, ExtArgs["result"]["song"]>
 
   export type SongSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
     team?: boolean
-    audioFilePath?: boolean
-    midiFilePath?: boolean
+    midiFile?: boolean
     lyrics?: boolean
   }, ExtArgs["result"]["song"]>
 
@@ -1643,8 +1542,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     team?: boolean
-    audioFilePath?: boolean
-    midiFilePath?: boolean
+    midiFile?: boolean
     lyrics?: boolean
   }, ExtArgs["result"]["song"]>
 
@@ -1652,15 +1550,13 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     team?: boolean
-    audioFilePath?: boolean
-    midiFilePath?: boolean
+    midiFile?: boolean
     lyrics?: boolean
   }
 
-  export type SongOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "team" | "audioFilePath" | "midiFilePath" | "lyrics", ExtArgs["result"]["song"]>
+  export type SongOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "team" | "midiFile" | "lyrics", ExtArgs["result"]["song"]>
   export type SongInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     SongLyrics?: boolean | Song$SongLyricsArgs<ExtArgs>
-    SongMidi?: boolean | Song$SongMidiArgs<ExtArgs>
   }
   export type SongIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
   export type SongIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1669,14 +1565,12 @@ export namespace Prisma {
     name: "Song"
     objects: {
       SongLyrics: Prisma.$SongLyricsPayload<ExtArgs> | null
-      SongMidi: Prisma.$SongMidiPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
       team: string
-      audioFilePath: string | null
-      midiFilePath: string
+      midiFile: Uint8Array
       lyrics: string
     }, ExtArgs["result"]["song"]>
     composites: {}
@@ -2073,7 +1967,6 @@ export namespace Prisma {
   export interface Prisma__SongClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     SongLyrics<T extends Song$SongLyricsArgs<ExtArgs> = {}>(args?: Subset<T, Song$SongLyricsArgs<ExtArgs>>): Prisma__SongLyricsClient<$Result.GetResult<Prisma.$SongLyricsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    SongMidi<T extends Song$SongMidiArgs<ExtArgs> = {}>(args?: Subset<T, Song$SongMidiArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2106,8 +1999,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Song", 'String'>
     readonly title: FieldRef<"Song", 'String'>
     readonly team: FieldRef<"Song", 'String'>
-    readonly audioFilePath: FieldRef<"Song", 'String'>
-    readonly midiFilePath: FieldRef<"Song", 'String'>
+    readonly midiFile: FieldRef<"Song", 'Bytes'>
     readonly lyrics: FieldRef<"Song", 'String'>
   }
     
@@ -2513,25 +2405,6 @@ export namespace Prisma {
      */
     include?: SongLyricsInclude<ExtArgs> | null
     where?: SongLyricsWhereInput
-  }
-
-  /**
-   * Song.SongMidi
-   */
-  export type Song$SongMidiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    where?: SongMidiWhereInput
   }
 
   /**
@@ -3625,1081 +3498,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SongLyricsInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model SongMidi
-   */
-
-  export type AggregateSongMidi = {
-    _count: SongMidiCountAggregateOutputType | null
-    _avg: SongMidiAvgAggregateOutputType | null
-    _sum: SongMidiSumAggregateOutputType | null
-    _min: SongMidiMinAggregateOutputType | null
-    _max: SongMidiMaxAggregateOutputType | null
-  }
-
-  export type SongMidiAvgAggregateOutputType = {
-    tempo: number | null
-  }
-
-  export type SongMidiSumAggregateOutputType = {
-    tempo: number | null
-  }
-
-  export type SongMidiMinAggregateOutputType = {
-    id: string | null
-    songId: string | null
-    tempo: number | null
-  }
-
-  export type SongMidiMaxAggregateOutputType = {
-    id: string | null
-    songId: string | null
-    tempo: number | null
-  }
-
-  export type SongMidiCountAggregateOutputType = {
-    id: number
-    songId: number
-    midinotes: number
-    tempo: number
-    _all: number
-  }
-
-
-  export type SongMidiAvgAggregateInputType = {
-    tempo?: true
-  }
-
-  export type SongMidiSumAggregateInputType = {
-    tempo?: true
-  }
-
-  export type SongMidiMinAggregateInputType = {
-    id?: true
-    songId?: true
-    tempo?: true
-  }
-
-  export type SongMidiMaxAggregateInputType = {
-    id?: true
-    songId?: true
-    tempo?: true
-  }
-
-  export type SongMidiCountAggregateInputType = {
-    id?: true
-    songId?: true
-    midinotes?: true
-    tempo?: true
-    _all?: true
-  }
-
-  export type SongMidiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which SongMidi to aggregate.
-     */
-    where?: SongMidiWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SongMidis to fetch.
-     */
-    orderBy?: SongMidiOrderByWithRelationInput | SongMidiOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: SongMidiWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SongMidis from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SongMidis.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned SongMidis
-    **/
-    _count?: true | SongMidiCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: SongMidiAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: SongMidiSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: SongMidiMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: SongMidiMaxAggregateInputType
-  }
-
-  export type GetSongMidiAggregateType<T extends SongMidiAggregateArgs> = {
-        [P in keyof T & keyof AggregateSongMidi]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateSongMidi[P]>
-      : GetScalarType<T[P], AggregateSongMidi[P]>
-  }
-
-
-
-
-  export type SongMidiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SongMidiWhereInput
-    orderBy?: SongMidiOrderByWithAggregationInput | SongMidiOrderByWithAggregationInput[]
-    by: SongMidiScalarFieldEnum[] | SongMidiScalarFieldEnum
-    having?: SongMidiScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: SongMidiCountAggregateInputType | true
-    _avg?: SongMidiAvgAggregateInputType
-    _sum?: SongMidiSumAggregateInputType
-    _min?: SongMidiMinAggregateInputType
-    _max?: SongMidiMaxAggregateInputType
-  }
-
-  export type SongMidiGroupByOutputType = {
-    id: string
-    songId: string
-    midinotes: JsonValue
-    tempo: number
-    _count: SongMidiCountAggregateOutputType | null
-    _avg: SongMidiAvgAggregateOutputType | null
-    _sum: SongMidiSumAggregateOutputType | null
-    _min: SongMidiMinAggregateOutputType | null
-    _max: SongMidiMaxAggregateOutputType | null
-  }
-
-  type GetSongMidiGroupByPayload<T extends SongMidiGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<SongMidiGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof SongMidiGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], SongMidiGroupByOutputType[P]>
-            : GetScalarType<T[P], SongMidiGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type SongMidiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    songId?: boolean
-    midinotes?: boolean
-    tempo?: boolean
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["songMidi"]>
-
-  export type SongMidiSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    songId?: boolean
-    midinotes?: boolean
-    tempo?: boolean
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["songMidi"]>
-
-  export type SongMidiSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    songId?: boolean
-    midinotes?: boolean
-    tempo?: boolean
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["songMidi"]>
-
-  export type SongMidiSelectScalar = {
-    id?: boolean
-    songId?: boolean
-    midinotes?: boolean
-    tempo?: boolean
-  }
-
-  export type SongMidiOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "songId" | "midinotes" | "tempo", ExtArgs["result"]["songMidi"]>
-  export type SongMidiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }
-  export type SongMidiIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }
-  export type SongMidiIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    song?: boolean | SongDefaultArgs<ExtArgs>
-  }
-
-  export type $SongMidiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "SongMidi"
-    objects: {
-      song: Prisma.$SongPayload<ExtArgs>
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      songId: string
-      midinotes: Prisma.JsonValue
-      tempo: number
-    }, ExtArgs["result"]["songMidi"]>
-    composites: {}
-  }
-
-  type SongMidiGetPayload<S extends boolean | null | undefined | SongMidiDefaultArgs> = $Result.GetResult<Prisma.$SongMidiPayload, S>
-
-  type SongMidiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<SongMidiFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: SongMidiCountAggregateInputType | true
-    }
-
-  export interface SongMidiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SongMidi'], meta: { name: 'SongMidi' } }
-    /**
-     * Find zero or one SongMidi that matches the filter.
-     * @param {SongMidiFindUniqueArgs} args - Arguments to find a SongMidi
-     * @example
-     * // Get one SongMidi
-     * const songMidi = await prisma.songMidi.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends SongMidiFindUniqueArgs>(args: SelectSubset<T, SongMidiFindUniqueArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one SongMidi that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {SongMidiFindUniqueOrThrowArgs} args - Arguments to find a SongMidi
-     * @example
-     * // Get one SongMidi
-     * const songMidi = await prisma.songMidi.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends SongMidiFindUniqueOrThrowArgs>(args: SelectSubset<T, SongMidiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first SongMidi that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiFindFirstArgs} args - Arguments to find a SongMidi
-     * @example
-     * // Get one SongMidi
-     * const songMidi = await prisma.songMidi.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends SongMidiFindFirstArgs>(args?: SelectSubset<T, SongMidiFindFirstArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first SongMidi that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiFindFirstOrThrowArgs} args - Arguments to find a SongMidi
-     * @example
-     * // Get one SongMidi
-     * const songMidi = await prisma.songMidi.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends SongMidiFindFirstOrThrowArgs>(args?: SelectSubset<T, SongMidiFindFirstOrThrowArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more SongMidis that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all SongMidis
-     * const songMidis = await prisma.songMidi.findMany()
-     * 
-     * // Get first 10 SongMidis
-     * const songMidis = await prisma.songMidi.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const songMidiWithIdOnly = await prisma.songMidi.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends SongMidiFindManyArgs>(args?: SelectSubset<T, SongMidiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a SongMidi.
-     * @param {SongMidiCreateArgs} args - Arguments to create a SongMidi.
-     * @example
-     * // Create one SongMidi
-     * const SongMidi = await prisma.songMidi.create({
-     *   data: {
-     *     // ... data to create a SongMidi
-     *   }
-     * })
-     * 
-     */
-    create<T extends SongMidiCreateArgs>(args: SelectSubset<T, SongMidiCreateArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many SongMidis.
-     * @param {SongMidiCreateManyArgs} args - Arguments to create many SongMidis.
-     * @example
-     * // Create many SongMidis
-     * const songMidi = await prisma.songMidi.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends SongMidiCreateManyArgs>(args?: SelectSubset<T, SongMidiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many SongMidis and returns the data saved in the database.
-     * @param {SongMidiCreateManyAndReturnArgs} args - Arguments to create many SongMidis.
-     * @example
-     * // Create many SongMidis
-     * const songMidi = await prisma.songMidi.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many SongMidis and only return the `id`
-     * const songMidiWithIdOnly = await prisma.songMidi.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends SongMidiCreateManyAndReturnArgs>(args?: SelectSubset<T, SongMidiCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a SongMidi.
-     * @param {SongMidiDeleteArgs} args - Arguments to delete one SongMidi.
-     * @example
-     * // Delete one SongMidi
-     * const SongMidi = await prisma.songMidi.delete({
-     *   where: {
-     *     // ... filter to delete one SongMidi
-     *   }
-     * })
-     * 
-     */
-    delete<T extends SongMidiDeleteArgs>(args: SelectSubset<T, SongMidiDeleteArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one SongMidi.
-     * @param {SongMidiUpdateArgs} args - Arguments to update one SongMidi.
-     * @example
-     * // Update one SongMidi
-     * const songMidi = await prisma.songMidi.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends SongMidiUpdateArgs>(args: SelectSubset<T, SongMidiUpdateArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more SongMidis.
-     * @param {SongMidiDeleteManyArgs} args - Arguments to filter SongMidis to delete.
-     * @example
-     * // Delete a few SongMidis
-     * const { count } = await prisma.songMidi.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends SongMidiDeleteManyArgs>(args?: SelectSubset<T, SongMidiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more SongMidis.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many SongMidis
-     * const songMidi = await prisma.songMidi.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends SongMidiUpdateManyArgs>(args: SelectSubset<T, SongMidiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more SongMidis and returns the data updated in the database.
-     * @param {SongMidiUpdateManyAndReturnArgs} args - Arguments to update many SongMidis.
-     * @example
-     * // Update many SongMidis
-     * const songMidi = await prisma.songMidi.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more SongMidis and only return the `id`
-     * const songMidiWithIdOnly = await prisma.songMidi.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends SongMidiUpdateManyAndReturnArgs>(args: SelectSubset<T, SongMidiUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one SongMidi.
-     * @param {SongMidiUpsertArgs} args - Arguments to update or create a SongMidi.
-     * @example
-     * // Update or create a SongMidi
-     * const songMidi = await prisma.songMidi.upsert({
-     *   create: {
-     *     // ... data to create a SongMidi
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the SongMidi we want to update
-     *   }
-     * })
-     */
-    upsert<T extends SongMidiUpsertArgs>(args: SelectSubset<T, SongMidiUpsertArgs<ExtArgs>>): Prisma__SongMidiClient<$Result.GetResult<Prisma.$SongMidiPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of SongMidis.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiCountArgs} args - Arguments to filter SongMidis to count.
-     * @example
-     * // Count the number of SongMidis
-     * const count = await prisma.songMidi.count({
-     *   where: {
-     *     // ... the filter for the SongMidis we want to count
-     *   }
-     * })
-    **/
-    count<T extends SongMidiCountArgs>(
-      args?: Subset<T, SongMidiCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], SongMidiCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a SongMidi.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends SongMidiAggregateArgs>(args: Subset<T, SongMidiAggregateArgs>): Prisma.PrismaPromise<GetSongMidiAggregateType<T>>
-
-    /**
-     * Group by SongMidi.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {SongMidiGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends SongMidiGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: SongMidiGroupByArgs['orderBy'] }
-        : { orderBy?: SongMidiGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, SongMidiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSongMidiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the SongMidi model
-   */
-  readonly fields: SongMidiFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for SongMidi.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__SongMidiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    song<T extends SongDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SongDefaultArgs<ExtArgs>>): Prisma__SongClient<$Result.GetResult<Prisma.$SongPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the SongMidi model
-   */
-  interface SongMidiFieldRefs {
-    readonly id: FieldRef<"SongMidi", 'String'>
-    readonly songId: FieldRef<"SongMidi", 'String'>
-    readonly midinotes: FieldRef<"SongMidi", 'Json'>
-    readonly tempo: FieldRef<"SongMidi", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * SongMidi findUnique
-   */
-  export type SongMidiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter, which SongMidi to fetch.
-     */
-    where: SongMidiWhereUniqueInput
-  }
-
-  /**
-   * SongMidi findUniqueOrThrow
-   */
-  export type SongMidiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter, which SongMidi to fetch.
-     */
-    where: SongMidiWhereUniqueInput
-  }
-
-  /**
-   * SongMidi findFirst
-   */
-  export type SongMidiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter, which SongMidi to fetch.
-     */
-    where?: SongMidiWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SongMidis to fetch.
-     */
-    orderBy?: SongMidiOrderByWithRelationInput | SongMidiOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for SongMidis.
-     */
-    cursor?: SongMidiWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SongMidis from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SongMidis.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of SongMidis.
-     */
-    distinct?: SongMidiScalarFieldEnum | SongMidiScalarFieldEnum[]
-  }
-
-  /**
-   * SongMidi findFirstOrThrow
-   */
-  export type SongMidiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter, which SongMidi to fetch.
-     */
-    where?: SongMidiWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SongMidis to fetch.
-     */
-    orderBy?: SongMidiOrderByWithRelationInput | SongMidiOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for SongMidis.
-     */
-    cursor?: SongMidiWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SongMidis from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SongMidis.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of SongMidis.
-     */
-    distinct?: SongMidiScalarFieldEnum | SongMidiScalarFieldEnum[]
-  }
-
-  /**
-   * SongMidi findMany
-   */
-  export type SongMidiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter, which SongMidis to fetch.
-     */
-    where?: SongMidiWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of SongMidis to fetch.
-     */
-    orderBy?: SongMidiOrderByWithRelationInput | SongMidiOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing SongMidis.
-     */
-    cursor?: SongMidiWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` SongMidis from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` SongMidis.
-     */
-    skip?: number
-    distinct?: SongMidiScalarFieldEnum | SongMidiScalarFieldEnum[]
-  }
-
-  /**
-   * SongMidi create
-   */
-  export type SongMidiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * The data needed to create a SongMidi.
-     */
-    data: XOR<SongMidiCreateInput, SongMidiUncheckedCreateInput>
-  }
-
-  /**
-   * SongMidi createMany
-   */
-  export type SongMidiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many SongMidis.
-     */
-    data: SongMidiCreateManyInput | SongMidiCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * SongMidi createManyAndReturn
-   */
-  export type SongMidiCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * The data used to create many SongMidis.
-     */
-    data: SongMidiCreateManyInput | SongMidiCreateManyInput[]
-    skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiIncludeCreateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * SongMidi update
-   */
-  export type SongMidiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * The data needed to update a SongMidi.
-     */
-    data: XOR<SongMidiUpdateInput, SongMidiUncheckedUpdateInput>
-    /**
-     * Choose, which SongMidi to update.
-     */
-    where: SongMidiWhereUniqueInput
-  }
-
-  /**
-   * SongMidi updateMany
-   */
-  export type SongMidiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update SongMidis.
-     */
-    data: XOR<SongMidiUpdateManyMutationInput, SongMidiUncheckedUpdateManyInput>
-    /**
-     * Filter which SongMidis to update
-     */
-    where?: SongMidiWhereInput
-    /**
-     * Limit how many SongMidis to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * SongMidi updateManyAndReturn
-   */
-  export type SongMidiUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * The data used to update SongMidis.
-     */
-    data: XOR<SongMidiUpdateManyMutationInput, SongMidiUncheckedUpdateManyInput>
-    /**
-     * Filter which SongMidis to update
-     */
-    where?: SongMidiWhereInput
-    /**
-     * Limit how many SongMidis to update.
-     */
-    limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiIncludeUpdateManyAndReturn<ExtArgs> | null
-  }
-
-  /**
-   * SongMidi upsert
-   */
-  export type SongMidiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * The filter to search for the SongMidi to update in case it exists.
-     */
-    where: SongMidiWhereUniqueInput
-    /**
-     * In case the SongMidi found by the `where` argument doesn't exist, create a new SongMidi with this data.
-     */
-    create: XOR<SongMidiCreateInput, SongMidiUncheckedCreateInput>
-    /**
-     * In case the SongMidi was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<SongMidiUpdateInput, SongMidiUncheckedUpdateInput>
-  }
-
-  /**
-   * SongMidi delete
-   */
-  export type SongMidiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
-    /**
-     * Filter which SongMidi to delete.
-     */
-    where: SongMidiWhereUniqueInput
-  }
-
-  /**
-   * SongMidi deleteMany
-   */
-  export type SongMidiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which SongMidis to delete
-     */
-    where?: SongMidiWhereInput
-    /**
-     * Limit how many SongMidis to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * SongMidi without action
-   */
-  export type SongMidiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SongMidi
-     */
-    select?: SongMidiSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SongMidi
-     */
-    omit?: SongMidiOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SongMidiInclude<ExtArgs> | null
   }
 
 
@@ -9112,8 +7910,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     team: 'team',
-    audioFilePath: 'audioFilePath',
-    midiFilePath: 'midiFilePath',
+    midiFile: 'midiFile',
     lyrics: 'lyrics'
   };
 
@@ -9128,16 +7925,6 @@ export namespace Prisma {
   };
 
   export type SongLyricsScalarFieldEnum = (typeof SongLyricsScalarFieldEnum)[keyof typeof SongLyricsScalarFieldEnum]
-
-
-  export const SongMidiScalarFieldEnum: {
-    id: 'id',
-    songId: 'songId',
-    midinotes: 'midinotes',
-    tempo: 'tempo'
-  };
-
-  export type SongMidiScalarFieldEnum = (typeof SongMidiScalarFieldEnum)[keyof typeof SongMidiScalarFieldEnum]
 
 
   export const UserScalarFieldEnum: {
@@ -9221,14 +8008,6 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -9236,6 +8015,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -9254,6 +8041,20 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes'
+   */
+  export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+  /**
+   * Reference to a field of type 'Bytes[]'
+   */
+  export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 
@@ -9330,22 +8131,18 @@ export namespace Prisma {
     id?: StringFilter<"Song"> | string
     title?: StringFilter<"Song"> | string
     team?: StringFilter<"Song"> | string
-    audioFilePath?: StringNullableFilter<"Song"> | string | null
-    midiFilePath?: StringFilter<"Song"> | string
+    midiFile?: BytesFilter<"Song"> | Uint8Array
     lyrics?: StringFilter<"Song"> | string
     SongLyrics?: XOR<SongLyricsNullableScalarRelationFilter, SongLyricsWhereInput> | null
-    SongMidi?: XOR<SongMidiNullableScalarRelationFilter, SongMidiWhereInput> | null
   }
 
   export type SongOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrderInput | SortOrder
-    midiFilePath?: SortOrder
+    midiFile?: SortOrder
     lyrics?: SortOrder
     SongLyrics?: SongLyricsOrderByWithRelationInput
-    SongMidi?: SongMidiOrderByWithRelationInput
   }
 
   export type SongWhereUniqueInput = Prisma.AtLeast<{
@@ -9355,19 +8152,16 @@ export namespace Prisma {
     NOT?: SongWhereInput | SongWhereInput[]
     title?: StringFilter<"Song"> | string
     team?: StringFilter<"Song"> | string
-    audioFilePath?: StringNullableFilter<"Song"> | string | null
-    midiFilePath?: StringFilter<"Song"> | string
+    midiFile?: BytesFilter<"Song"> | Uint8Array
     lyrics?: StringFilter<"Song"> | string
     SongLyrics?: XOR<SongLyricsNullableScalarRelationFilter, SongLyricsWhereInput> | null
-    SongMidi?: XOR<SongMidiNullableScalarRelationFilter, SongMidiWhereInput> | null
   }, "id">
 
   export type SongOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrderInput | SortOrder
-    midiFilePath?: SortOrder
+    midiFile?: SortOrder
     lyrics?: SortOrder
     _count?: SongCountOrderByAggregateInput
     _max?: SongMaxOrderByAggregateInput
@@ -9381,8 +8175,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Song"> | string
     title?: StringWithAggregatesFilter<"Song"> | string
     team?: StringWithAggregatesFilter<"Song"> | string
-    audioFilePath?: StringNullableWithAggregatesFilter<"Song"> | string | null
-    midiFilePath?: StringWithAggregatesFilter<"Song"> | string
+    midiFile?: BytesWithAggregatesFilter<"Song"> | Uint8Array
     lyrics?: StringWithAggregatesFilter<"Song"> | string
   }
 
@@ -9436,58 +8229,6 @@ export namespace Prisma {
     songId?: StringWithAggregatesFilter<"SongLyrics"> | string
     midinotes?: JsonWithAggregatesFilter<"SongLyrics">
     tempo?: IntWithAggregatesFilter<"SongLyrics"> | number
-  }
-
-  export type SongMidiWhereInput = {
-    AND?: SongMidiWhereInput | SongMidiWhereInput[]
-    OR?: SongMidiWhereInput[]
-    NOT?: SongMidiWhereInput | SongMidiWhereInput[]
-    id?: StringFilter<"SongMidi"> | string
-    songId?: StringFilter<"SongMidi"> | string
-    midinotes?: JsonFilter<"SongMidi">
-    tempo?: IntFilter<"SongMidi"> | number
-    song?: XOR<SongScalarRelationFilter, SongWhereInput>
-  }
-
-  export type SongMidiOrderByWithRelationInput = {
-    id?: SortOrder
-    songId?: SortOrder
-    midinotes?: SortOrder
-    tempo?: SortOrder
-    song?: SongOrderByWithRelationInput
-  }
-
-  export type SongMidiWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    songId?: string
-    AND?: SongMidiWhereInput | SongMidiWhereInput[]
-    OR?: SongMidiWhereInput[]
-    NOT?: SongMidiWhereInput | SongMidiWhereInput[]
-    midinotes?: JsonFilter<"SongMidi">
-    tempo?: IntFilter<"SongMidi"> | number
-    song?: XOR<SongScalarRelationFilter, SongWhereInput>
-  }, "id" | "songId">
-
-  export type SongMidiOrderByWithAggregationInput = {
-    id?: SortOrder
-    songId?: SortOrder
-    midinotes?: SortOrder
-    tempo?: SortOrder
-    _count?: SongMidiCountOrderByAggregateInput
-    _avg?: SongMidiAvgOrderByAggregateInput
-    _max?: SongMidiMaxOrderByAggregateInput
-    _min?: SongMidiMinOrderByAggregateInput
-    _sum?: SongMidiSumOrderByAggregateInput
-  }
-
-  export type SongMidiScalarWhereWithAggregatesInput = {
-    AND?: SongMidiScalarWhereWithAggregatesInput | SongMidiScalarWhereWithAggregatesInput[]
-    OR?: SongMidiScalarWhereWithAggregatesInput[]
-    NOT?: SongMidiScalarWhereWithAggregatesInput | SongMidiScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"SongMidi"> | string
-    songId?: StringWithAggregatesFilter<"SongMidi"> | string
-    midinotes?: JsonWithAggregatesFilter<"SongMidi">
-    tempo?: IntWithAggregatesFilter<"SongMidi"> | number
   }
 
   export type UserWhereInput = {
@@ -9784,52 +8525,43 @@ export namespace Prisma {
     id?: string
     title: string
     team: string
-    audioFilePath?: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
     SongLyrics?: SongLyricsCreateNestedOneWithoutSongInput
-    SongMidi?: SongMidiCreateNestedOneWithoutSongInput
   }
 
   export type SongUncheckedCreateInput = {
     id?: string
     title: string
     team: string
-    audioFilePath?: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
     SongLyrics?: SongLyricsUncheckedCreateNestedOneWithoutSongInput
-    SongMidi?: SongMidiUncheckedCreateNestedOneWithoutSongInput
   }
 
   export type SongUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUpdateOneWithoutSongNestedInput
-    SongMidi?: SongMidiUpdateOneWithoutSongNestedInput
   }
 
   export type SongUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
     SongLyrics?: SongLyricsUncheckedUpdateOneWithoutSongNestedInput
-    SongMidi?: SongMidiUncheckedUpdateOneWithoutSongNestedInput
   }
 
   export type SongCreateManyInput = {
     id?: string
     title: string
     team: string
-    audioFilePath?: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
   }
 
@@ -9837,8 +8569,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
   }
 
@@ -9846,8 +8577,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
   }
 
@@ -9893,54 +8623,6 @@ export namespace Prisma {
   }
 
   export type SongLyricsUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    songId?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type SongMidiCreateInput = {
-    id?: string
-    midinotes: JsonNullValueInput | InputJsonValue
-    tempo: number
-    song: SongCreateNestedOneWithoutSongMidiInput
-  }
-
-  export type SongMidiUncheckedCreateInput = {
-    id?: string
-    songId: string
-    midinotes: JsonNullValueInput | InputJsonValue
-    tempo: number
-  }
-
-  export type SongMidiUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-    song?: SongUpdateOneRequiredWithoutSongMidiNestedInput
-  }
-
-  export type SongMidiUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    songId?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type SongMidiCreateManyInput = {
-    id?: string
-    songId: string
-    midinotes: JsonNullValueInput | InputJsonValue
-    tempo: number
-  }
-
-  export type SongMidiUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type SongMidiUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     songId?: StringFieldUpdateOperationsInput | string
     midinotes?: JsonNullValueInput | InputJsonValue
@@ -10290,19 +8972,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type BytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
   }
 
   export type SongLyricsNullableScalarRelationFilter = {
@@ -10310,22 +8984,11 @@ export namespace Prisma {
     isNot?: SongLyricsWhereInput | null
   }
 
-  export type SongMidiNullableScalarRelationFilter = {
-    is?: SongMidiWhereInput | null
-    isNot?: SongMidiWhereInput | null
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
-  }
-
   export type SongCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrder
-    midiFilePath?: SortOrder
+    midiFile?: SortOrder
     lyrics?: SortOrder
   }
 
@@ -10333,8 +8996,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrder
-    midiFilePath?: SortOrder
+    midiFile?: SortOrder
     lyrics?: SortOrder
   }
 
@@ -10342,8 +9004,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     team?: SortOrder
-    audioFilePath?: SortOrder
-    midiFilePath?: SortOrder
+    midiFile?: SortOrder
     lyrics?: SortOrder
   }
 
@@ -10365,22 +9026,14 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
+  export type BytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -10491,36 +9144,24 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
-  export type SongMidiCountOrderByAggregateInput = {
-    id?: SortOrder
-    songId?: SortOrder
-    midinotes?: SortOrder
-    tempo?: SortOrder
-  }
-
-  export type SongMidiAvgOrderByAggregateInput = {
-    tempo?: SortOrder
-  }
-
-  export type SongMidiMaxOrderByAggregateInput = {
-    id?: SortOrder
-    songId?: SortOrder
-    tempo?: SortOrder
-  }
-
-  export type SongMidiMinOrderByAggregateInput = {
-    id?: SortOrder
-    songId?: SortOrder
-    tempo?: SortOrder
-  }
-
-  export type SongMidiSumOrderByAggregateInput = {
-    tempo?: SortOrder
-  }
-
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -10544,6 +9185,11 @@ export namespace Prisma {
     every?: AccountWhereInput
     some?: AccountWhereInput
     none?: AccountWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type SessionOrderByRelationAggregateInput = {
@@ -10590,6 +9236,24 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -10750,30 +9414,18 @@ export namespace Prisma {
     connect?: SongLyricsWhereUniqueInput
   }
 
-  export type SongMidiCreateNestedOneWithoutSongInput = {
-    create?: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-    connectOrCreate?: SongMidiCreateOrConnectWithoutSongInput
-    connect?: SongMidiWhereUniqueInput
-  }
-
   export type SongLyricsUncheckedCreateNestedOneWithoutSongInput = {
     create?: XOR<SongLyricsCreateWithoutSongInput, SongLyricsUncheckedCreateWithoutSongInput>
     connectOrCreate?: SongLyricsCreateOrConnectWithoutSongInput
     connect?: SongLyricsWhereUniqueInput
   }
 
-  export type SongMidiUncheckedCreateNestedOneWithoutSongInput = {
-    create?: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-    connectOrCreate?: SongMidiCreateOrConnectWithoutSongInput
-    connect?: SongMidiWhereUniqueInput
-  }
-
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
+  export type BytesFieldUpdateOperationsInput = {
+    set?: Uint8Array
   }
 
   export type SongLyricsUpdateOneWithoutSongNestedInput = {
@@ -10786,16 +9438,6 @@ export namespace Prisma {
     update?: XOR<XOR<SongLyricsUpdateToOneWithWhereWithoutSongInput, SongLyricsUpdateWithoutSongInput>, SongLyricsUncheckedUpdateWithoutSongInput>
   }
 
-  export type SongMidiUpdateOneWithoutSongNestedInput = {
-    create?: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-    connectOrCreate?: SongMidiCreateOrConnectWithoutSongInput
-    upsert?: SongMidiUpsertWithoutSongInput
-    disconnect?: SongMidiWhereInput | boolean
-    delete?: SongMidiWhereInput | boolean
-    connect?: SongMidiWhereUniqueInput
-    update?: XOR<XOR<SongMidiUpdateToOneWithWhereWithoutSongInput, SongMidiUpdateWithoutSongInput>, SongMidiUncheckedUpdateWithoutSongInput>
-  }
-
   export type SongLyricsUncheckedUpdateOneWithoutSongNestedInput = {
     create?: XOR<SongLyricsCreateWithoutSongInput, SongLyricsUncheckedCreateWithoutSongInput>
     connectOrCreate?: SongLyricsCreateOrConnectWithoutSongInput
@@ -10804,16 +9446,6 @@ export namespace Prisma {
     delete?: SongLyricsWhereInput | boolean
     connect?: SongLyricsWhereUniqueInput
     update?: XOR<XOR<SongLyricsUpdateToOneWithWhereWithoutSongInput, SongLyricsUpdateWithoutSongInput>, SongLyricsUncheckedUpdateWithoutSongInput>
-  }
-
-  export type SongMidiUncheckedUpdateOneWithoutSongNestedInput = {
-    create?: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-    connectOrCreate?: SongMidiCreateOrConnectWithoutSongInput
-    upsert?: SongMidiUpsertWithoutSongInput
-    disconnect?: SongMidiWhereInput | boolean
-    delete?: SongMidiWhereInput | boolean
-    connect?: SongMidiWhereUniqueInput
-    update?: XOR<XOR<SongMidiUpdateToOneWithWhereWithoutSongInput, SongMidiUpdateWithoutSongInput>, SongMidiUncheckedUpdateWithoutSongInput>
   }
 
   export type SongCreateNestedOneWithoutSongLyricsInput = {
@@ -10836,20 +9468,6 @@ export namespace Prisma {
     upsert?: SongUpsertWithoutSongLyricsInput
     connect?: SongWhereUniqueInput
     update?: XOR<XOR<SongUpdateToOneWithWhereWithoutSongLyricsInput, SongUpdateWithoutSongLyricsInput>, SongUncheckedUpdateWithoutSongLyricsInput>
-  }
-
-  export type SongCreateNestedOneWithoutSongMidiInput = {
-    create?: XOR<SongCreateWithoutSongMidiInput, SongUncheckedCreateWithoutSongMidiInput>
-    connectOrCreate?: SongCreateOrConnectWithoutSongMidiInput
-    connect?: SongWhereUniqueInput
-  }
-
-  export type SongUpdateOneRequiredWithoutSongMidiNestedInput = {
-    create?: XOR<SongCreateWithoutSongMidiInput, SongUncheckedCreateWithoutSongMidiInput>
-    connectOrCreate?: SongCreateOrConnectWithoutSongMidiInput
-    upsert?: SongUpsertWithoutSongMidiInput
-    connect?: SongWhereUniqueInput
-    update?: XOR<XOR<SongUpdateToOneWithWhereWithoutSongMidiInput, SongUpdateWithoutSongMidiInput>, SongUncheckedUpdateWithoutSongMidiInput>
   }
 
   export type SessionCreateNestedManyWithoutUserInput = {
@@ -10882,6 +9500,10 @@ export namespace Prisma {
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -10990,18 +9612,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type NestedBytesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesFilter<$PrismaModel> | Uint8Array
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -11032,32 +9647,14 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  export type NestedBytesWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel>
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel>
+    not?: NestedBytesWithAggregatesFilter<$PrismaModel> | Uint8Array
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBytesFilter<$PrismaModel>
+    _max?: NestedBytesFilter<$PrismaModel>
   }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -11115,6 +9712,20 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -11132,6 +9743,34 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -11190,23 +9829,6 @@ export namespace Prisma {
     create: XOR<SongLyricsCreateWithoutSongInput, SongLyricsUncheckedCreateWithoutSongInput>
   }
 
-  export type SongMidiCreateWithoutSongInput = {
-    id?: string
-    midinotes: JsonNullValueInput | InputJsonValue
-    tempo: number
-  }
-
-  export type SongMidiUncheckedCreateWithoutSongInput = {
-    id?: string
-    midinotes: JsonNullValueInput | InputJsonValue
-    tempo: number
-  }
-
-  export type SongMidiCreateOrConnectWithoutSongInput = {
-    where: SongMidiWhereUniqueInput
-    create: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-  }
-
   export type SongLyricsUpsertWithoutSongInput = {
     update: XOR<SongLyricsUpdateWithoutSongInput, SongLyricsUncheckedUpdateWithoutSongInput>
     create: XOR<SongLyricsCreateWithoutSongInput, SongLyricsUncheckedCreateWithoutSongInput>
@@ -11230,47 +9852,20 @@ export namespace Prisma {
     tempo?: IntFieldUpdateOperationsInput | number
   }
 
-  export type SongMidiUpsertWithoutSongInput = {
-    update: XOR<SongMidiUpdateWithoutSongInput, SongMidiUncheckedUpdateWithoutSongInput>
-    create: XOR<SongMidiCreateWithoutSongInput, SongMidiUncheckedCreateWithoutSongInput>
-    where?: SongMidiWhereInput
-  }
-
-  export type SongMidiUpdateToOneWithWhereWithoutSongInput = {
-    where?: SongMidiWhereInput
-    data: XOR<SongMidiUpdateWithoutSongInput, SongMidiUncheckedUpdateWithoutSongInput>
-  }
-
-  export type SongMidiUpdateWithoutSongInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type SongMidiUncheckedUpdateWithoutSongInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    midinotes?: JsonNullValueInput | InputJsonValue
-    tempo?: IntFieldUpdateOperationsInput | number
-  }
-
   export type SongCreateWithoutSongLyricsInput = {
     id?: string
     title: string
     team: string
-    audioFilePath?: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
-    SongMidi?: SongMidiCreateNestedOneWithoutSongInput
   }
 
   export type SongUncheckedCreateWithoutSongLyricsInput = {
     id?: string
     title: string
     team: string
-    audioFilePath?: string | null
-    midiFilePath: string
+    midiFile: Uint8Array
     lyrics: string
-    SongMidi?: SongMidiUncheckedCreateNestedOneWithoutSongInput
   }
 
   export type SongCreateOrConnectWithoutSongLyricsInput = {
@@ -11293,76 +9888,16 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
-    SongMidi?: SongMidiUpdateOneWithoutSongNestedInput
   }
 
   export type SongUncheckedUpdateWithoutSongLyricsInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
+    midiFile?: BytesFieldUpdateOperationsInput | Uint8Array
     lyrics?: StringFieldUpdateOperationsInput | string
-    SongMidi?: SongMidiUncheckedUpdateOneWithoutSongNestedInput
-  }
-
-  export type SongCreateWithoutSongMidiInput = {
-    id?: string
-    title: string
-    team: string
-    audioFilePath?: string | null
-    midiFilePath: string
-    lyrics: string
-    SongLyrics?: SongLyricsCreateNestedOneWithoutSongInput
-  }
-
-  export type SongUncheckedCreateWithoutSongMidiInput = {
-    id?: string
-    title: string
-    team: string
-    audioFilePath?: string | null
-    midiFilePath: string
-    lyrics: string
-    SongLyrics?: SongLyricsUncheckedCreateNestedOneWithoutSongInput
-  }
-
-  export type SongCreateOrConnectWithoutSongMidiInput = {
-    where: SongWhereUniqueInput
-    create: XOR<SongCreateWithoutSongMidiInput, SongUncheckedCreateWithoutSongMidiInput>
-  }
-
-  export type SongUpsertWithoutSongMidiInput = {
-    update: XOR<SongUpdateWithoutSongMidiInput, SongUncheckedUpdateWithoutSongMidiInput>
-    create: XOR<SongCreateWithoutSongMidiInput, SongUncheckedCreateWithoutSongMidiInput>
-    where?: SongWhereInput
-  }
-
-  export type SongUpdateToOneWithWhereWithoutSongMidiInput = {
-    where?: SongWhereInput
-    data: XOR<SongUpdateWithoutSongMidiInput, SongUncheckedUpdateWithoutSongMidiInput>
-  }
-
-  export type SongUpdateWithoutSongMidiInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
-    lyrics?: StringFieldUpdateOperationsInput | string
-    SongLyrics?: SongLyricsUpdateOneWithoutSongNestedInput
-  }
-
-  export type SongUncheckedUpdateWithoutSongMidiInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    team?: StringFieldUpdateOperationsInput | string
-    audioFilePath?: NullableStringFieldUpdateOperationsInput | string | null
-    midiFilePath?: StringFieldUpdateOperationsInput | string
-    lyrics?: StringFieldUpdateOperationsInput | string
-    SongLyrics?: SongLyricsUncheckedUpdateOneWithoutSongNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
