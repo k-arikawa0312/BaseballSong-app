@@ -1,39 +1,41 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import Link from "next/link";
-import {
-  HiMagnifyingGlass,
-  HiClock,
-  HiMusicalNote,
-  HiUser,
-  HiCog6Tooth,
-  HiPlus,
-} from "react-icons/hi2";
-import { FaMicrophone } from "react-icons/fa";
+import { useState } from "react"
+import Link from "next/link"
+import { HiMagnifyingGlass, HiClock, HiMusicalNote, HiUser, HiCog6Tooth, HiPlus } from "react-icons/hi2"
+import { FaMicrophone } from "react-icons/fa"
+import AddSongModal from "@/components/addSongModal"
 
-export default function TopPage() {
-  const [searchTerm, setSearchTerm] = useState("");
+interface Song {
+  id: number;
+  title: string;
+  team: string;
+}
 
-  // サンプルデータ - 最近歌った曲
-  const recentSongs = [
-    { id: 1, title: "六甲おろし", team: "阪神タイガース" },
-    { id: 2, title: "燃えよドラゴンズ", team: "中日ドラゴンズ" },
-    { id: 3, title: "若鷹軍団", team: "福岡ソフトバンクホークス" },
-    { id: 4, title: "闘魂こめて", team: "読売ジャイアンツ" },
-  ];
+interface TopPageProps {
+  songs: Song[];
+  onAddSong: (newSong: { title: string; team: string; midiFile: File | null }) => void;
+}
 
-  // サンプルデータ - 野球応援歌
-  const cheeringSongs = [
-    { id: 1, title: "六甲おろし", team: "阪神タイガース" },
-    { id: 2, title: "燃えよドラゴンズ", team: "中日ドラゴンズ" },
-    { id: 3, title: "若鷹軍団", team: "福岡ソフトバンクホークス" },
-    { id: 4, title: "闘魂こめて", team: "読売ジャイアンツ" },
-    { id: 5, title: "ファンファーレ", team: "広島東洋カープ" },
-    { id: 6, title: "翔べ!ライオンズ", team: "西武ライオンズ" },
-    { id: 7, title: "熱き星たちよ", team: "横浜DeNAベイスターズ" },
-    { id: 8, title: "栄冠は君に輝く", team: "高校野球" },
-  ];
+export default function TopPage({ songs, onAddSong }: TopPageProps) {
+  const [searchTerm, setSearchTerm] = useState("")
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+
+  // 最近歌った曲（最初の4曲を表示）
+  const recentSongs = songs.slice(0, 4)
+
+  // 応援歌（最初の4曲を表示）
+  const cheeringSongs = songs.slice(0, 4)
+
+  const handleAddSong = (newSong: { title: string; team: string; midiFile: File | null }) => {
+    onAddSong(newSong)
+
+    console.log("Added new song:", {
+      title: newSong.title,
+      team: newSong.team,
+      midiFile: newSong.midiFile ? newSong.midiFile.name : "No file",
+    })
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-900">
@@ -100,9 +102,7 @@ export default function TopPage() {
             <h2 className="text-xl font-bold text-white">マイプレイリスト</h2>
           </div>
           <div className="bg-gray-800 rounded-lg p-6 text-center shadow-sm border border-gray-700">
-            <p className="text-gray-300">
-              お気に入りの曲をプレイリストに追加してください
-            </p>
+            <p className="text-gray-300">お気に入りの曲をプレイリストに追加してください</p>
           </div>
         </div>
 
@@ -116,7 +116,7 @@ export default function TopPage() {
             {cheeringSongs.map((song) => (
               <Link
                 href={`/sing/${song.id}`}
-                key={`cheering-${song.id}`}
+                key={`sing-${song.id}`}
                 className="bg-white rounded-lg overflow-hidden shadow-sm"
               >
                 <div className="p-3">
@@ -134,10 +134,16 @@ export default function TopPage() {
 
       {/* 追加ボタン */}
       <div className="fixed bottom-6 right-6">
-        <button className="w-14 h-14 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg">
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="w-14 h-14 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-lg"
+        >
           <HiPlus className="h-6 w-6" />
         </button>
       </div>
+
+      {/* 曲追加モーダル */}
+      <AddSongModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onAddSong={handleAddSong} />
     </div>
-  );
+  )
 }
