@@ -124,19 +124,11 @@ exports.Prisma.SongScalarFieldEnum = {
   id: 'id',
   title: 'title',
   team: 'team',
-  audioFilePath: 'audioFilePath',
-  midiFilePath: 'midiFilePath',
+  midiFile: 'midiFile',
   lyrics: 'lyrics'
 };
 
 exports.Prisma.SongLyricsScalarFieldEnum = {
-  id: 'id',
-  songId: 'songId',
-  midinotes: 'midinotes',
-  tempo: 'tempo'
-};
-
-exports.Prisma.SongMidiScalarFieldEnum = {
   id: 'id',
   songId: 'songId',
   midinotes: 'midinotes',
@@ -203,22 +195,21 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
-
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   Song: 'Song',
   SongLyrics: 'SongLyrics',
-  SongMidi: 'SongMidi',
   User: 'User',
   Session: 'Session',
   Account: 'Account',
