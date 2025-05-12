@@ -11,6 +11,7 @@
     "build": "frourio-next && next build"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
     "@prisma/client": "^6.7.0",
     "@tailwindcss/postcss": "^4.1.4",
     "@tonejs/midi": "^2.0.28",
