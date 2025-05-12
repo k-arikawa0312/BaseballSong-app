@@ -1,56 +1,54 @@
-"use client"
+"use client";
 
-import { apiClient } from "@/lib/apiClient"
-import { MidiFile, midiFileSchema } from "@/schema/midiFile"
-import type React from "react"
-import { useForm } from "react-hook-form"
-import { HiXMark } from "react-icons/hi2"
+import { apiClient } from "@/lib/apiClient";
+import { MidiFile, midiFileSchema } from "@/schema/midiFile";
+import type React from "react";
+import { useForm } from "react-hook-form";
+import { HiXMark } from "react-icons/hi2";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react"
+import { useState } from "react";
 
 interface AddSongModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
+export default function AddSongModal({ isOpen, onClose }: AddSongModalProps) {
+  const [message, setMessage] = useState<string | null>(null);
+  const [selectedFileName, setSelectedFileName] = useState<string>("");
 
-
-export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
-  const [message,setMessage] = useState<string|null>(null)
-  const [selectedFileName, setSelectedFileName] = useState<string>("")
-  
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-    watch
+    watch,
   } = useForm<MidiFile>({
-    resolver: zodResolver(midiFileSchema)
-  })
+    resolver: zodResolver(midiFileSchema),
+  });
 
-  const midiFile = watch("midiFile")
+  const midiFile = watch("midiFile");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setSelectedFileName(e.target.files[0].name)
+      setSelectedFileName(e.target.files[0].name);
     }
-  }
+  };
 
   const onSubmit = handleSubmit(async (data: MidiFile) => {
     try {
       await apiClient["song"].$post({
-        body: data
-      })
-      setMessage('曲の追加に成功しました。')
-    } catch(e) {
-      console.error(e)
-      setMessage('曲の追加に失敗しました。')
+        body: data,
+      });
+      setMessage("曲の追加に成功しました。");
+    } catch (e) {
+      console.error(e);
+      setMessage("曲の追加に失敗しました。");
     }
-    setSelectedFileName("")
-    reset()
-    onClose()
-  })
+    setSelectedFileName("");
+    reset();
+    onClose();
+  });
 
   // 日本のプロ野球12球団
   const teams = [
@@ -66,9 +64,9 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
     { id: "fighters", name: "北海道日本ハムファイターズ" },
     { id: "eagles", name: "東北楽天ゴールデンイーグルス" },
     { id: "lions", name: "埼玉西武ライオンズ" },
-  ]
+  ];
 
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center">
@@ -82,7 +80,9 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
 
         <form onSubmit={onSubmit} className="p-4 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">曲のタイトル</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              曲のタイトル
+            </label>
             <input
               type="text"
               placeholder="例: 六甲おろし"
@@ -92,7 +92,9 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">チーム</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              チーム
+            </label>
             <select
               {...register("team", { required: true })}
               className="w-full p-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:border-indigo-500 focus:outline-none"
@@ -104,17 +106,21 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
                 </option>
               ))}
             </select>
-            {errors.team && <p className="mt-1 text-sm text-red-600">{errors.team.message}</p>}
+            {errors.team && (
+              <p className="mt-1 text-sm text-red-600">{errors.team.message}</p>
+            )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">MIDIファイル</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              MIDIファイル
+            </label>
             <div className="flex items-center">
               <input
                 type="file"
                 accept=".mid,.midi"
                 {...register("midiFile", {
-                  onChange: handleFileChange
+                  onChange: handleFileChange,
                 })}
                 className="hidden"
                 id="midiFile"
@@ -130,12 +136,16 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
               </div>
             </div>
             {errors.midiFile && (
-              <p className="mt-1 text-sm text-red-500">{errors.midiFile.message as string}</p>
+              <p className="mt-1 text-sm text-red-500">
+                {errors.midiFile.message as string}
+              </p>
             )}
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-1">歌詞</label>
+            <label className="block text-sm font-medium text-gray-300 mb-1">
+              歌詞
+            </label>
             <textarea
               {...register("lyrics", { required: true })}
               rows={4}
@@ -159,9 +169,9 @@ export default function AddSongModal({ isOpen, onClose}: AddSongModalProps) {
               追加する
             </button>
           </div>
-          {message&&<p>{message}</p>}
+          {message && <p>{message}</p>}
         </form>
       </div>
     </div>
-  )
+  );
 }
