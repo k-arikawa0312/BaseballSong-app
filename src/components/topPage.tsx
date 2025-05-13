@@ -14,7 +14,7 @@ interface Song {
 
 interface TopPageProps {
   songs: Song[];
-  onAddSong: (newSong: { title: string; team: string; midiFile: File | null }) => void;
+  onAddSong: (newSong: { title: string; team: string; midiFile: File | null,lylics:string }) => void;
 }
 
 export default function TopPage({ songs, onAddSong }: TopPageProps) {
@@ -27,7 +27,7 @@ export default function TopPage({ songs, onAddSong }: TopPageProps) {
   // 応援歌（最初の4曲を表示）
   const cheeringSongs = songs.slice(0, 4)
 
-  const handleAddSong = (newSong: { title: string; team: string; midiFile: File | null }) => {
+  const handleAddSong = (newSong: { title: string; team: string; midiFile: File | null,lylics:string }) => {
     onAddSong(newSong)
 
     console.log("Added new song:", {
@@ -143,7 +143,7 @@ export default function TopPage({ songs, onAddSong }: TopPageProps) {
       </div>
 
       {/* 曲追加モーダル */}
-      <AddSongModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} onAddSong={handleAddSong} />
+      <AddSongModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}  />
     </div>
   )
 }
