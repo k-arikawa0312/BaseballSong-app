@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import type { z } from 'zod';
 import { frourioSpec } from './frourio';
-import type { POST } from './route';
+import type { POST, GET } from './route';
 
-type RouteChecker = [typeof POST];
+type RouteChecker = [typeof POST, typeof GET];
 
 type SpecType = typeof frourioSpec;
 
@@ -22,12 +22,26 @@ type Controller = {
         body: z.infer<SpecType['post']['res'][500]['body']>;
       }
   >;
+  get: (
+    req: {
+    },
+  ) => Promise<
+    | {
+        status: 200;
+        body: z.infer<SpecType['get']['res'][200]['body']>;
+      }
+    | {
+        status: 500;
+        body: z.infer<SpecType['get']['res'][500]['body']>;
+      }
+  >;
 };
 
 type MethodHandler = (req: NextRequest | Request) => Promise<NextResponse>;
 
 type ResHandler = {
   POST: MethodHandler
+  GET: MethodHandler
 };
 
 export const createRoute = (controller: Controller): ResHandler => {
@@ -59,6 +73,28 @@ export const createRoute = (controller: Controller): ResHandler => {
         }
         case 500: {
           const body = frourioSpec.post.res[500].body.safeParse(res.body);
+
+          if (body.error) return createResErr();
+
+          return createResponse(body.data, { status: 500 });
+        }
+        default:
+          throw new Error(res satisfies never);
+      }
+    },
+    GET: async (req) => {
+      const res = await controller.get({  });
+
+      switch (res.status) {
+        case 200: {
+          const body = frourioSpec.get.res[200].body.safeParse(res.body);
+
+          if (body.error) return createResErr();
+
+          return createResponse(body.data, { status: 200 });
+        }
+        case 500: {
+          const body = frourioSpec.get.res[500].body.safeParse(res.body);
 
           if (body.error) return createResErr();
 
