@@ -23,7 +23,7 @@ export default function AddSongModal({ isOpen, onClose }: AddSongModalProps) {
     formState: { errors },
     reset,
     watch,
-  } = useForm<MidiFile>({
+  } = useForm({
     resolver: zodResolver(midiFileSchema),
   });
 
@@ -35,11 +35,16 @@ export default function AddSongModal({ isOpen, onClose }: AddSongModalProps) {
     }
   };
 
-  const onSubmit = handleSubmit(async (data: MidiFile) => {
+  const onSubmit = async (data: MidiFile) => {
+    console.log("送信データ:", data);
+
     try {
+      // FrourioNextのクライアントを使用
+      // format: 'formData'が指定されているため、自動的にFormDataに変換される
       await apiClient["song"].$post({
         body: data,
       });
+
       setMessage("曲の追加に成功しました。");
     } catch (e) {
       console.error(e);
@@ -48,7 +53,7 @@ export default function AddSongModal({ isOpen, onClose }: AddSongModalProps) {
     setSelectedFileName("");
     reset();
     onClose();
-  });
+  };
 
   // 日本のプロ野球12球団
   const teams = [
@@ -78,7 +83,7 @@ export default function AddSongModal({ isOpen, onClose }: AddSongModalProps) {
           </button>
         </div>
 
-        <form onSubmit={onSubmit} className="p-4 space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-1">
               曲のタイトル

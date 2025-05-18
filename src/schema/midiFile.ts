@@ -23,6 +23,7 @@ const isFileList = (value: any): boolean => {
 };
 
 export const midiFileSchema = z.object({
+  id: z.string().optional(),
   title: z.string(),
   team: z.string(),
   midiFile: z

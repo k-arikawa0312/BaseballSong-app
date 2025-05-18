@@ -1,10 +1,17 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { HiMagnifyingGlass, HiClock, HiMusicalNote, HiUser, HiCog6Tooth, HiPlus } from "react-icons/hi2"
-import { FaMicrophone } from "react-icons/fa"
-import AddSongModal from "@/components/addSongModal"
+import { useState } from "react";
+import Link from "next/link";
+import {
+  HiMagnifyingGlass,
+  HiClock,
+  HiMusicalNote,
+  HiUser,
+  HiCog6Tooth,
+  HiPlus,
+} from "react-icons/hi2";
+import { FaMicrophone } from "react-icons/fa";
+import AddSongModal from "@/components/addSongModal";
 
 interface Song {
   id: number;
@@ -14,28 +21,23 @@ interface Song {
 
 interface TopPageProps {
   songs: Song[];
-  onAddSong: (newSong: { title: string; team: string; midiFile: File | null,lylics:string }) => void;
+  onAddSong: (newSong: {
+    title: string;
+    team: string;
+    midiFile: File | null;
+    lylics: string;
+  }) => void;
 }
 
-export default function TopPage({ songs, onAddSong }: TopPageProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+export default function TopPage({ songs }: TopPageProps) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // 最近歌った曲（最初の4曲を表示）
-  const recentSongs = songs.slice(0, 4)
+  const recentSongs = songs.slice(0, 4);
 
   // 応援歌（最初の4曲を表示）
-  const cheeringSongs = songs.slice(0, 4)
-
-  const handleAddSong = (newSong: { title: string; team: string; midiFile: File | null,lylics:string }) => {
-    onAddSong(newSong)
-
-    console.log("Added new song:", {
-      title: newSong.title,
-      team: newSong.team,
-      midiFile: newSong.midiFile ? newSong.midiFile.name : "No file",
-    })
-  }
+  const cheeringSongs = songs.slice(0, 4);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-900">
@@ -102,7 +104,9 @@ export default function TopPage({ songs, onAddSong }: TopPageProps) {
             <h2 className="text-xl font-bold text-white">マイプレイリスト</h2>
           </div>
           <div className="bg-gray-800 rounded-lg p-6 text-center shadow-sm border border-gray-700">
-            <p className="text-gray-300">お気に入りの曲をプレイリストに追加してください</p>
+            <p className="text-gray-300">
+              お気に入りの曲をプレイリストに追加してください
+            </p>
           </div>
         </div>
 
@@ -143,7 +147,10 @@ export default function TopPage({ songs, onAddSong }: TopPageProps) {
       </div>
 
       {/* 曲追加モーダル */}
-      <AddSongModal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}  />
+      <AddSongModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
     </div>
-  )
+  );
 }
